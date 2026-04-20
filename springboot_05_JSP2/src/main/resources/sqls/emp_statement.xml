@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+   <!-- TODO 007 실행되어지는 SQL이 있는 Mapper 파일은 선언 
+   		application.properties 파일의 설정에 따라서 classpath:sqls/*.xml 작성
+   		
+   		resultType은 application.properties 파일의 설정에 따라서 
+   		mybatis.type-aliases-package DTO/VO 클래스명 Camel(소문->대문) Case 방법으로 사용한다
+   		
+   		사용되는 namespace는 Interface 혹은 Impl 객체를 사용하면 된다
+   -->
+<mapper namespace="com.min.edu.model.IEmpDao">
+
+	<!-- id는 메소드명을 사용한다 -->
+	<select id="getAllEmp" resultType="empVo">
+		SELECT e.EMPNO, e.ENAME, e.JOB ,
+			e.MGR , e.HIREDATE , e.SAL ,
+			e.COMM , e.DEPTNO 
+		FROM EMP e 
+		
+	</select>
+	
+
+</mapper>
