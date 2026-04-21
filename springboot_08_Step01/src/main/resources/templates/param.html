@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<!-- TODO 005 타임리프 html 선언 -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- Inlining 방식, Attribute 방식 -->
+	<h1>이름 : [[${param.param != null ? param.param : '손님'}]]</h1>
+	
+	<h1>월 : <span th:text="${param.month != null ? param.month : '0'}"></span></h1>
+	
+	<!--  이름이 같은 경우 page > request > session > application 우선순위를 갖는다 -->
+	<h1>model : [[${req}]]</h1>
+	<h1>request : [[${requestScope.req2}]]</h1>
+</body>
+</html>

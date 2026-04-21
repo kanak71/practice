@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<!-- TODO 015 Thymeleaf 처음 페이지 HTML 작성 -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Filter &amp; Transaction 페이지</title>
+</head>
+<body>
+	<!-- TODO 016 전체조회 -->
+	<fieldset>
+		<legend>JOBS 전체조회</legend>
+		<a href="./selectJobs.do">전체조회 실행</a>
+	</fieldset>
+	
+	<!-- TODO 017 입력 -->
+	<fieldset>
+		<legend>JOBS 입력</legend>
+		<form action="./insertJobs.do" method="post">
+			아이디:<input name="id"><br>
+			직업명:<input name="title"><br>
+			최소급여:<input name="minsal"><br>
+			최대급여:<input name="maxsal"><br>
+			<input type="submit" value="입력">
+		</form>
+	</fieldset>
+	
+	<!-- TODO 018 수정 -->
+	<fieldset>
+		<legend>JOBS 테이블의 죄소 급여를 모두 0으로 변경</legend>
+		<a href="./updateJobs.do">모든 Min_Salary를 0으로 변경</a>
+	</fieldset>
+	
+	<!-- TODO 024 트랜잭션 -->
+	<fieldset>
+		<legend>Transaction처리 ; 수정 후 입력(오류)</legend>
+		<form action="./transaction.do" method="post">
+			아이디:<input name="id"><br>
+			직업명:<input name="title"><br>
+			최소급여:<input name="minsal"><br>
+			최대급여:<input name="maxsal"><br>
+			<input type="submit" value="입력">
+		</form>
+	</fieldset>
+	
+	<!-- TODO 028 전역 예외처리 테스트 -->
+	<fieldset>
+		<legend>@ControllerAdvice 처리</legend>
+		<a href="./test-error">@ControllerAdvice 예외 전역처리</a>
+	</fieldset>
+	
+</body>
+</html>

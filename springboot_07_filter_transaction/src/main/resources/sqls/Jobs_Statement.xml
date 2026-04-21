@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<!-- TODO 004 myBatis xml mapper 설정 select insert update -->    
+<mapper namespace="com.min.edu.model.mapper.IJobsMapper">
+
+	<select id="allSelectJob" resultType="jobsVo">
+	SELECT JOB_ID JOB_TITLE, MIN_SALARY, MAX_SALARY 
+	FROM JOBS
+	ORDER BY JOB_ID
+	
+	</select>
+
+	<insert id="insertJob" parameterType="java.util.Map">
+	INSERT INTO JOBS (JOB_ID, JOB_TITLE, MIN_SALARY, MAX_SALARY )
+	VALUES(#{job_id}, #{job_title}, #{min_salary}, #{max_salary})
+	
+	</insert>
+	
+	<update id="updateJob">
+		UPDATE JOBS SET MIN_SALARY = 0
+	</update>
+</mapper>

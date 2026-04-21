@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TODO 001 logback.xml 설정 -->
+<configuration>
+
+    <!-- 콘솔 Appender -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%logger{1}] [%level] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 파일 Appender (일별 로그) -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./logs/springboot.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>./logs/spring_step01.log.%d{yyMMdd}</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%logger{1}] [%level] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- MyBatis / JDBC SQL 로그 -->
+    <logger name="java.sql.Connection" level="TRACE"/>
+    <logger name="java.sql.PreparedStatement" level="TRACE"/>
+    <logger name="java.sql.ResultSet" level="TRACE"/>
+
+    <!-- TODO 002 logback 프로파일 설정 
+    	dev 개발용 
+    default와 dev appplication.properties에 설정-->
+    <springProfile name="default">
+	    <root level="TRACE">
+	        <appender-ref ref="CONSOLE"/>
+	        <appender-ref ref="FILE"/>
+	    </root>
+    </springProfile>
+    
+    
+    <springProfile name="dev">
+        <logger name="java.sql.Connection" level="TRACE"/>
+        <logger name="java.sql.PreparedStatement" level="TRACE"/>
+        <logger name="java.sql.ResultSet" level="TRACE"/>
+        
+        <logger name="org.hibernate.SQL" level="DEBUG"/>
+        <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
+
+        <root level="DEBUG">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="FILE"/>
+        </root>
+    </springProfile>
+
+</configuration>

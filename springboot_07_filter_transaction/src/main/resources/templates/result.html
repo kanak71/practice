@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>결과화면</title>
+</head>
+<!-- TODO 019 전체조회, 입력, 수정, 결과화면 -->
+<body>
+	<button onclick="javascript:history.back(1)">뒤로가기</button>
+	<fieldset>
+		<legend>전체조회 결과</legend>
+		<ul>
+			<li th:each="vo : ${lists}" th:text="${vo}"></li>
+		</ul>
+	</fieldset>
+	<fieldset>
+		<legend>입력결과</legend>
+		<div th:text="${insertResult}"></div>
+	</fieldset>
+	<fieldset>
+		<legend>수정결과</legend>
+		<div th:text="${updateResult}"></div>
+	</fieldset>
+	
+	<!-- TODO 015 트랜잭션 결과 -->
+	<fieldset>
+		<legend>트랜잭션 결과(성공)</legend>
+		<div th:text="${transactionResult}"></div>
+	</fieldset>
+</body>
+</html>
