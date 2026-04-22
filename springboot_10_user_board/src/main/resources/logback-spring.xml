@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+<!--TODO 002 로그 처리를 위한 xml-->
+    <!-- 콘솔 Appender -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%logger{1}] [%level] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 파일 Appender (일별 로그) -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./logs/springboot.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>./logs/spring_step01.log.%d{yyMMdd}</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%logger{1}] [%level] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- MyBatis / JDBC SQL 로그 -->
+    <logger name="java.sql.Connection" level="TRACE"/>
+    <logger name="java.sql.PreparedStatement" level="TRACE"/>
+    <logger name="java.sql.ResultSet" level="TRACE"/>
+
+    <springProfile name="default">
+	    <root level="INFO">
+	        <appender-ref ref="CONSOLE"/>
+	        <appender-ref ref="FILE"/>
+	    </root>
+    </springProfile>
+    
+    
+    <springProfile name="dev">
+    <!-- 1) mybatis의 쿼리 로그를 위해서 @Mapper의 위치를 설정해 주고 -->
+    	<logger name="com.min.edu.model" level="TRACE"/>
+    	<!-- 2) JDBC 로그 -->
+        <logger name="java.sql.Connection" level="TRACE"/>
+        <logger name="java.sql.PreparedStatement" level="TRACE"/>
+        <logger name="java.sql.ResultSet" level="TRACE"/>
+        
+        <logger name="org.hibernate.SQL" level="DEBUG"/>
+        <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
+
+		<!-- 3) mybatis 로그처리 -->
+		<logger name="org.apache.ibatis" level="TRACE"/>
+    	<logger name="org.mybatis" level="TRACE"/>
+
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="FILE"/>
+        </root>
+    </springProfile>
+
+</configuration>
