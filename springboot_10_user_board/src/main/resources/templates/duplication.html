@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>아이디 중복검사</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
+  <!-- TODO 028 JQuery AJAX 사용 방법 -->
+  <!-- TODO 031 fetch AJAX 사용 방법 -->
+  <script type="text/javascript">
+  	window.onload = function(){
+  		document.getElementById("btnUse").style.display="none";
+  	}
+  	
+  	function useId(){
+  		var id = document.getElementById("id").value;
+  		opener.document.getElementById("id").value=id;
+  		opener.document.getElementById("pw").focus();
+  		opener.document.getElementById("id").removeAttribute("onclick");
+  		self.close();
+  	}
+  	
+  	//TODO 028 
+  	function checkId1(){
+  		console.log("jQuery AJAX");
+  		
+  		var id = document.getElementById("id").value;
+  		//JQuery AJAX는 jquery.min.js를 필요로  하고, $.로 시작하면 된다
+  		if(id != ""){
+  			$.ajax({
+  				url: './duplicatejQuery.do',
+  				method: 'post',
+  				data:"checkId="+id,
+  				dataType:"json",
+  				success: function(res){
+  					console.log(res);
+  					if(res.isc == "true"){
+  						document.getElementById("condition").textContent = "사용 가능 아이디입니다";
+  						document.getElementById("btnUse").style.display="block";
+  					} else{
+  						document.getElementById("condition").textContent = "사용할 수 없는 아이디입니다";
+  						document.getElementById("btnUse").style.display="none";
+  					}
+  				},
+  				error: function(){
+  					alert("잘못된 요청 처리");
+  				}
+  				
+  				
+  			});
+  			
+  			
+  		}
+  	}
+  	
+  	//----------
+  	//TODO 031 fetch AJAX
+  	function checkId2(){
+  		console.log("fetch AJAX 작동");
+  		var id = document.getElementById("id").value;
+  		
+  		fetch("./duplicationFetch.do", {
+  			method : "post",
+  			headers :{
+  				'Content-Type' : 'application/x-www-form-urlencoded'
+  			},
+  			body: "checkId="+encodeURIComponent(id)
+  		})
+  			.then(response=>{
+  				if(!response.ok){
+  					throw new Error("잘못된 요청처리");
+  				}
+  				return response.json();
+  			})
+  			.then(res=>{
+  				if(res.isc == "true"){
+					document.getElementById("condition").textContent = "사용 가능 아이디입니다";
+					document.getElementById("btnUse").style.display="block";
+				} else{
+					document.getElementById("condition").textContent = "사용할 수 없는 아이디입니다";
+					document.getElementById("btnUse").style.display="none";
+				}
+  			})
+  			.catch(error =>{
+  				alert("잘못된 요청처리")
+  			});
+  	}
+  	
+  	
+  
+  </script>
+</head>
+<body>
+	<div class="container">
+		<h4>아이디 중복검사</h4>
+		<input class="form-control" id="id">
+		
+		<!-- TODO 027 JQuery AJAX 버튼-->
+		<input type="button" class="btn btn-success" value="ID확인(JQuery)" onclick="checkId1()">
+		<!-- TODO 032 fetch AJAX 버튼 -->
+		<input type="button" class="btn btn-success" value="ID확인(fetch)" onclick="checkId2()">
+		
+		<!-- 사용버튼 -->
+		<input class="btn btn-info" type="button" value="ID사용" id="btnUse" onclick="useId()">
+		<div id="condition"></div>
+		
+		
+	</div>
+</body>
+</html>

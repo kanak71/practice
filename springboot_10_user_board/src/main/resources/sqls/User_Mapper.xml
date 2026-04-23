@@ -20,15 +20,16 @@
 <!-- 회원가입    signupMember     -->
 <insert id="signupMember">
 	INSERT INTO MEMBER 
-	 VALUES ((SELECT 'A' || LPAD(MAX(SUBSTR(ID,4,1))+1  , 3, '0')  FROM MEMBER m) , #{name}, #{password},
-	             #{email}, 'U', 'Y',
+	 VALUES ((SELECT 'user'||LPAD( MAX(SUBSTR(ID,5,2)) +1 , 2, '0')
+  				FROM MEMBER m WHERE ID LIKE 'user__') , #{name}, #{password},
+	             #{email}, 'ROLE_USER', 'Y',
 	             CURRENT_DATE)
 </insert>
 <!-- 회원전체조회 userSelectAll    -->
 <select id="userSelectAll" resultType="UserVo">
 	SELECT ID, NAME 
 	 FROM MEMBER m
-	 WHERE AUTH ='U'
+	 WHERE AUTH ='ROLE_USER'
 </select>
 
 <!-- 회원전체조회 getAllUser       -->
@@ -41,7 +42,7 @@
 <select id="getSearcherUser" resultType="UserVo">
 	SELECT ID, NAME
 	 	FROM MEMBER m 
- 		WHERE  AUTH ='U' 
+ 		WHERE  AUTH ='ROLE_USER' 
  		<choose>
  			<when test="opt.equals('id')">
  				AND ID LIKE '%'||#{keyword}||'%'
@@ -57,7 +58,7 @@
 	SELECT ID
 	 FROM MEMBER m
 	 WHERE NAME =#{name} AND EMAIL = #{email}
-	 AND AUTH ='U'
+	 AND AUTH ='ROLE_USER'
 </select>                         
 
 <!-- 권한변경 setChageAuth --> 

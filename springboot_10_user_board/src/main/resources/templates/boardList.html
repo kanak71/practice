@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- TODO 020 게시판 전체 보기 화면 -->
+<meta charset="UTF-8">
+<title>게시판 리스트</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<!-- /*
+	${loginVo} -> model
+	${session.loginVo} -> 세션에서 찾음
+	*/ -->
+	<div class="container">
+		<div th:if="${session.loginVo != null}">
+			<span th:text="|${session.loginVo.name}님 반갑습니다|"></span>
+			<!-- TODO 021 로그아웃 버튼 board.html -->
+			<input type="button" value="로그아웃" th:onclick="|location.href='@{/logout.do}'|">
+			
+			<!-- thymeleaf HTML의 속성 기반이다, tag가 없으면 작성못하기 때문에 th:block을 통해서 tag 없이도 작업이 가능 -->
+			<th:block th:if="${session.loginVo.auth == 'ROLE_ADMIN'}">
+				<input type="button" value="회원관리" th:onclick="location.href='@{/managementUser.do}">
+			
+			</th:block>
+		</div>
+		
+		<!-- 게시판 출력 -->
+		<form th:action="@{/multiDelete.do}" method="post" onsubmit="return chkBox()">
+			<input type="submit" value="글삭제">
+			<input type="button" value="글작성" th:onclick="|location.href='@{/insertBoard,do}'|">
+			
+			<span th:if="${session.loginVo.auth == 'ROLD_ADMIN'}">
+				<input type="button" value="회원전체조회" th:onclick="|location.href='@{/userSelectAll.do}'|">
+				<input type="button" value="삭제글복구" th:onclick="|location.href='@{restoreBoard.do}'|">
+			</span>
+			
+			<table class="table table-hover">
+				<thead>
+					<tr class="success">
+						<td>
+							<input type="checkbox" onclick="allCheckValues(this.checked)">
+						</td>
+						<td>연번</td>
+						<td>아이디</td>
+						<td>제목</td>
+						<td>등록일</td>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr th:each="vo, vs : ${boardList}">
+						<td>
+							<input type="checkbox" name="chkVal" th:value="${vo.seq}">
+						</td>
+						<td th:text="${boardList.size() - vs.index}"></td>
+						<td th:text="${vo.id}"></td>
+						<td>
+						
+							<th:block th:if="${vo.delflag == 'Y'}">
+								<font style="color: #ccc; font-size: 9px;"> --관리자에 의해 삭제됨</font>
+							</th:block>
+							
+							<th:block th:unless="${vo.delflag == 'Y'}">
+								<a th:href="@{/detailBoard.do(seq=${vo.seq})}" th:utext=${vo.title}></a>
+							</th:block>
+							
+						</td>
+						<td th:text="${#strings.substring(vo.regdate, 0, 10)}">
+							
+						</td>
+					
+					
+					</tr>
+				</tbody>
+			</table>
+		</form>
+		
+	</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
+  <!--TODO 025 회원가입 화면 ID 중복검사 window.open  -->
+  <script type="text/javascript">
+  	function duplicate(){
+	  window.open("./duplication.do","중복검사","width=500px, height=600px");
+  }
+  
+  </script>
+</head>
+<body>
+	<div class="container">
+		<form th:action="@{/signUp.do}" method="post">
+			<h3>회원가입</h3>
+			<h3>필수 값은 반드시 입력해주세요</h3>
+			<div>
+				<input class="form-control" name="name" id="name" placeholder="이름 작성">
+				<input class="form-control" name="id" id="id" placeholder="아이디 작성(클릭시 중복체크 화면으로 이동)" maxlength="10" onclick="duplicate()">
+				<input class="form-control" type="password" name="password" id="pw" placeholder="비밀번호 작성">
+				<input class="form-control" type="password" id="pwOk" placeholder="비밀번호 확인">
+				<input class="form-control" name="email" id="email" placeholder="ex)info@example.com">
+			</div>
+			<div>
+				<input type="submit" class="btn btn-primary" value="회원가입">
+				<input type="button" class="btn btn-danger" value="가입취소" th:onclick="|javascript:history.back(-1)|">
+			</div>
+		</form>
+	</div>
+</body>
+</html>

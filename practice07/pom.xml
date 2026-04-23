@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.min.edu</groupId>
-	<artifactId>springboot_10_user_board</artifactId>
+	<artifactId>practice07</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>springboot_10_user_board</name>
+	<name>practice07</name>
 	<description/>
 	<url/>
 	<licenses>
@@ -77,29 +77,21 @@
 			<scope>test</scope>
 		</dependency>
 		
-		<!--TODO 001 추가 라이브러리 -->
-		<!--문자열 처리를 쉽게 해주는 라이브러리 google꺼-->
-		<dependency>
+		 <dependency>
 	        <groupId>com.github.ben-manes.caffeine</groupId>
 	        <artifactId>guava</artifactId>
       	</dependency>
-      	<!--문자열 처리를 쉽게 해주는 라이브러리 apache꺼-->
-		<dependency>
+      	
+      	<dependency>
 	        <groupId>org.apache.commons</groupId>
 	        <artifactId>commons-lang3</artifactId>
-      	</dependency>
-      	<!--AOP starter -->
-      	<dependency>
-	        <groupId>org.springframework.boot</groupId>
-	        <artifactId>spring-boot-starter-aspectj-test</artifactId>
-      	</dependency>
-      	
-      	<!--Google Gson : java객체를 JSON text로 처리해준다--><!-- -->
-      	<dependency>
-	        <groupId>com.google.code.gson</groupId>
-	        <artifactId>gson</artifactId>
       </dependency>
-		
+      
+       <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-aspectj</artifactId>
+      </dependency>
+      	
 	</dependencies>
 
 	<build>
