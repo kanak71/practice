@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/header :: headerHead">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="container">
+		글 개수 : <span id="restoreCount" th:text="${restoreList.size()}"></span>
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr class="info">
+					<th>연번</th>
+					<th>아이디</th>
+					<th>제목</th>
+					<th>등록일</th>
+					<th>복구</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="vo : ${restoreList}">
+					<td th:text="${vo.seq}"></td>
+					<td th:text="${vo.id}"></td>
+					<td th:text="${vo.title}"></td>
+					<td th:text="${vo.regdate}"></td>
+					<td>
+					<!-- this를 보내서 closeset(tr) => children[0] => textContent : seq 화면에서 탐색하여 값으로 사용 -->
+					<!-- TODO 064 삭제글 복수 AJAX -->
+						<button onclick="restoreAjax(this)">jQuery복구</button>
+						<button onclick="restoreFetch(this)">fetch복구</button>
+						<button onclick="restoreAxios(this)">axios복구</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<!-- TODO 065 삭제 글 복구 이벤트 javascript -->
+<script type="text/javascript">
+	function restoreFetch(obj){
+		//1) 속해 있는 상위의 tr을 찾는데 
+		var parentTr = obj.closest("tr");
+		//2) seq값을 가지고 있는 <td>를 찾고, 해당 td의 콘텐츠값(textContent)을 가져온다
+		var seq = parentTr.children[0].textContent;
+		console.log("this의 seq값 : " , seq);
+		
+		fetch("./restore.do?seq="+seq)
+		.then(response => response.text())
+		.then(data => {
+			if(data == "true"){
+				parentTr.remove();
+			}
+		})
+		.catch(error=>{
+			console.log("잘못된 요청 처리");
+		})
+	}
+
+
+
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+

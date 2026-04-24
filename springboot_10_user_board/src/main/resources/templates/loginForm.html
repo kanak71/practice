@@ -32,6 +32,8 @@
 						
 						<!-- TODO 023 회원가입 버튼 -->
 						<input type="button" value="회원가입" th:onclick="|javascript:location.href='@{/signupForm.do}'| ">
+						
+						<!-- TODO 036 아이디 찾기 버튼 -->
 						<input type="button" value="아이디찾기" onclick="findId()">
 					</td>
 				</tr>
@@ -40,9 +42,11 @@
 		
 	</div>
 </body>
+<!-- TODO 037 아이디 찾기 javascript 함수 -->
 <script type="text/javascript">
 	function findId(){
 		console.log("아이디 찾기");
+		window.open("./findIdWindow.do","_black", "width=500px, height=300px");
 	}
 </script>
 </html>

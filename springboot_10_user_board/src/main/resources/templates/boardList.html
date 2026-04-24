@@ -7,6 +7,35 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!-- TODO 052 다중삭제 javascript 이벤트 -->
+  <script type="text/javascript">
+  //selector 표현식을 통해서 checked되어 있는 checkbox를 탐색해 본다
+  // "[]"속성, ":"값(상태)
+  	function chkBox(){
+  		console.log("submit 동작");
+  		//selector 표현식 요구사항 : 
+  		//선택 tag - tag input 이고, 
+  		//선택 속성 - type은 checkbox이고, name은 chkVal, 
+  		//선택 상태 - checked
+  		var chkVal_isc = document.querySelectorAll("input[type=checkbox][name=chkVal]:checked");
+  		console.log("선택된 checkbox(name=chkVal) 인것만 갯수 : ", chkVal_isc.length);
+  		if(chkVal_isc == 0){
+  			alert("한개 이상의 글을 선택해주세요")
+  			return false;
+  		}
+  		
+  	} 
+  
+  	function allCheckValues(bool){
+  		console.log("전체선택 checkbox 상태 : ", bool);
+  		var chkVal = document.getElementsByName("chkVal");
+  		
+  		for(let i=0; i<chkVal.length; i++){
+  			chkVal[i].checked = bool;
+  		}
+  	}
+  	
+  </script>
 </head>
 <body>
 <!-- /*
@@ -21,19 +50,25 @@
 			
 			<!-- thymeleaf HTML의 속성 기반이다, tag가 없으면 작성못하기 때문에 th:block을 통해서 tag 없이도 작업이 가능 -->
 			<th:block th:if="${session.loginVo.auth == 'ROLE_ADMIN'}">
-				<input type="button" value="회원관리" th:onclick="location.href='@{/managementUser.do}">
+				<input type="button" value="회원관리" th:onclick="|location.href='@{/managementUser.do}'|">
 			
 			</th:block>
 		</div>
 		
 		<!-- 게시판 출력 -->
 		<form th:action="@{/multiDelete.do}" method="post" onsubmit="return chkBox()">
+			<!-- TODO 051 다중삭제 버튼 -->
 			<input type="submit" value="글삭제">
-			<input type="button" value="글작성" th:onclick="|location.href='@{/insertBoard,do}'|">
 			
-			<span th:if="${session.loginVo.auth == 'ROLD_ADMIN'}">
+			<!-- TODO 042 글작성 버튼 -->
+			<input type="button" value="글작성" th:onclick="|location.href='@{/insertBoard.do}'|">
+			
+			<span th:if="${session.loginVo.auth == 'ROLE_ADMIN'}">
+			
+			<!-- TODO 067 회원전체 조회 버튼 -->
 				<input type="button" value="회원전체조회" th:onclick="|location.href='@{/userSelectAll.do}'|">
-				<input type="button" value="삭제글복구" th:onclick="|location.href='@{restoreBoard.do}'|">
+				<!-- TODO 062 글삭제 복구 버튼 -->
+				<input type="button" value="삭제글복구" th:onclick="|location.href='@{/restoreBoard.do}'|">
 			</span>
 			
 			<table class="table table-hover">

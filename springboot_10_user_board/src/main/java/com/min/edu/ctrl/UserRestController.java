@@ -1,16 +1,22 @@
 package com.min.edu.ctrl;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.min.edu.model.service.IUserService;
+import com.min.edu.vo.UserVo;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -60,6 +66,47 @@ public class UserRestController {
 		result.put("isc", chk);	//{"isc":"true"|"false}
 		
 		return ResponseEntity.ok(result);
+	}
+	
+	//TODO 041 아이디 찾기 fetch Ajax 요청
+	@PostMapping(value="/findId.do")
+	public String findId(@RequestParam Map<String, Object> map) {
+		log.info("UserRestController findId.do POST 아이디 찾기 : ", map);
+		String id = service.findId(map);
+		return StringUtils.defaultIfEmpty(id, "");
+	}
+	
+	//TODO 073 회원검색 fetch Ajax 요청
+	/*
+	 * 1. SpringBoot에서는 JSON을 @ResponseBody 객체를 자동으로 JSON 모양으로 변경
+	 * 2. Map {"id"="홍길동"} => return map => {"id":"홍길동"}
+	 * 3. UserVo => toString() => {"id":"user02","name":"홍길동", "email":"sample@sample.com"}
+	 * 4. lists<UserVo> => [
+	 * 
+	 * 						]
+	 *  이렇게 java의 객체를 자동으로 JSON으로 변환해주는 라이브러리 => jackson-bind 라이브러리
+	 *  												=> 동작이 되려면 starter spring web 있어야 한다
+	 *  
+	 */
+	@PostMapping(value= "/getSearchUser.do")
+	public List<UserVo> getSearchUser(@RequestParam Map<String, Object> map){
+		log.info("UserRestController getSearchUser.do POST 회원검색 : {}", map);
+		
+		List<UserVo> lists = service.getSearcherUser(map);
+		
+		//1) JSON Object 작성방법
+		
+		
+		//2) JSON Array 작성방법
+		
+		//3) Gson 사용 방법
+		Gson gson = new GsonBuilder().create();	//Gson객체를 만드는 방법
+		gson.toJson(lists);
+		
+		
+		//4) SpringBoot에서 JCF는 자동으로 JSON 처리가 된다
+		
+		return lists;	//Spring 
 	}
 	
 }

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>상세글보기</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<!-- /*
+	TODO 049 헤더 정보를 include th:replace 해당 태그를 변경해서 입력해준다
+	 */-->
+	 <div th:replace="layout/header:: headerNav"></div>
+	 
+	 <!-- TODO 050 글상세 내용 출력 화면 -->
+	 
+	 <div>
+	 	<!-- /*
+	 		||는 Thymeleaf의 문자열 리터럴 문법
+	 		문자열 + 변수 결합
+	 	*/ -->
+	 	<div class="form-control" th:text="|아이디:${boardOne.id}|"></div>
+	 	<div class="form-control" th:text="|제목:${boardOne.title}|"></div>
+	 	<div class="form-control" th:text="|내용:${boardOne.content}|"></div>
+	 	<div class="form-control" th:text="|작성일:${boardOne.regdate}|"></div>
+	 </div>
+	 <div>
+	 	<button type="button" class="btn btn-danger" th:onclick="deleteOne([[${boardOne.seq}]])">삭제</button>
+	 	
+	 	<!-- TODO 056 답글작성 버튼 -->
+	 	<button type="button" class="btn btn-primary" th:onclick="replyBoard([[${boardOne.seq}]])">답글</button>
+	 	<input type="button" value="수정">
+	 </div>
+</body>
+<!-- TODO 055 상세글 이벤트 javascript -->
+<!-- TODO 057 답글 이벤트 javascript -->
+<script type="text/javascript">
+	function deleteOne(seq){
+	    if(confirm("정말 삭제하시겠습니까?")){
+	        location.href="./multiDelete.do?chkVal="+seq;
+	    }
+	}
+	
+	function replyBoard(seq){
+		location.href="./replyBoard.do?seq="+seq;
+	}
+	
+</script>
+</html>
+
+
+
+
+
+

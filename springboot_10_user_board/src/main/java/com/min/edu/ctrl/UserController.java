@@ -1,9 +1,11 @@
 package com.min.edu.ctrl;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -92,11 +94,45 @@ public class UserController {
 		log.info("UserController duplication.do GET 아이디 중복검사 회면");
 		return "duplication";
 	}
+	
+	//TODO 034 회원가입 정보 입력 signUp.do
+	@PostMapping(value = "/signUp.do")
+	public String signUp(UserVo vo, HttpServletResponse response) throws IOException {
+		log.info("UserController singUp.do POST 회원가입 입력 : {}", vo);
+		int cnt = service.signupMember(vo);
+			
+		if(cnt == 1) {
+			log.info("회원가입 여부 : {}", (cnt>0)? "가입성공":"가입실패");
+			return "redirect:/";
+		} else {
+			response.setContentType("text/html; charset=UTF-8;");	//servlet의 인코딩
+			response.getWriter().print("<script>alert('로그인 정보가 없습니다'); location.href='./';</script>");	//@ResponseBody
+			return null;
+		}
+	}
+
+
+	//TODO 038 아이디 찾기 findidWindow.do
+	@GetMapping(value = "/findIdWindow.do")
+	public String findIdWindow() {
+		log.info("UserController findIdWindow.do GET 아이디 조회");
+		return "findId";
+	}
+	
+	//TODO 068 회원 전체 조회 userSelectAll.do
+	@GetMapping(value="/userSelectAll.do")
+	public String userSelectAll(Model model) {
+		log.info("UserController userSelectAll.do [관리자] 회원전체조회 화면 이동");
+		
+		List<UserVo> userList = service.userSelectAll();
+		model.addAttribute("userList", userList);
+		
+		return "userSelectAll";
+	}
+
+
+
 }
-
-
-
-
 
 
 

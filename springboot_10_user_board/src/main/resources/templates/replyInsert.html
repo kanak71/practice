@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>답글작성</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<!-- TODO 059 답글 입력 작성 화면 -->
+<body>
+	<div class="container">
+		<form th:action="@{/replyBoard.do}" method="post">
+		<input type="hidden" name="seq" th:value="${boardOne.seq}">
+		<div class="form-group">
+			<label for="id">아이디</label>
+			<div class="form-control" id="id" th:text="${session.loginVo.id}"></div>
+		</div>
+		<div class="form-group">
+			<label for="title">제목</label>
+			<input class="form-control" id="title" name="title" required="required" th:placeholder="|원본제목:${#strings.substring(boardOne.title,0,10)}|">
+		</div>
+		<div class="form-group">
+			<label for="content"></label>
+			<textarea class="form-control" rows="5" id="content" name="content" required="required"></textarea>
+		</div>
+		<div>
+		<!-- TODO 060 답글 입력 버튼  -->
+			<button class="btn btn-success" type="submit">답글 입력</button>
+			<button class="btn btn-danger" type="reset">초기화</button>
+			<button class="btn btn-default" onclick="history.back(-1)">취소</button>
+		</div>
+		</form>
+	</div>
+</body>
+</html>

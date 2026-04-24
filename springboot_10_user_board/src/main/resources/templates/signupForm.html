@@ -7,10 +7,44 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   
-  <!--TODO 025 회원가입 화면 ID 중복검사 window.open  -->
+  <!-- //TODO 025 회원가입 화면 ID 중복검사 window.open  -->
+  <!-- //TODO 035 회원가입 정보 유효성검사 -->
   <script type="text/javascript">
+  
+  //TODO 025
   	function duplicate(){
 	  window.open("./duplication.do","중복검사","width=500px, height=600px");
+  }
+  
+  //TODO 035
+  window.onload = function(){
+	  document.querySelector("input[type=submit]").onclick = function(event){
+		  event.preventDefault();
+		  
+		  var name = document.getElementById("name");
+		  var id = document.getElementById("id");
+		  var password = document.getElementById("pw");
+		  var pwOk = document.getElementById("pwOk");
+		  var email = document.getElementById("email");
+		  
+		  const emailRegEx = /^[a-zA-Z0-9, _%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+		  if(name.value.length <  2){
+			  alert("정확한 성명을 작성해주세요");
+			  return;
+		  }
+		  
+		  if(password.value != pwOk.value){
+			  alert("작성한 비밀번호가 일치하기 않습니다");
+			  return;
+			  
+		  }
+		  if(!email.value.match(emailRegEx)){
+			  alert("잘못된 이메일 형식입니다");
+			  return;
+		  }
+		  
+		  document.forms[0].submit();
+	  }
   }
   
   </script>

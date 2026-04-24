@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- /*
+	TODO 048 외부에서 공통적으로 사용할 GNB를 작성 화면
+	1. <head th:fragment="headerHead"> headerHead 이름을 html에서 사용해서 th:replace tag를 교체한다
+	2. Thymeleaf의 조각템플릿(fragment)
+	*/ -->
+	<!-- headerNav 이름의 재사용 가능한 UI 조건 만든 것 -->
+<head th:fragment="headerHead">
+<meta charset="UTF-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<!-- headerNav 이름의 재사용 가능한 UI 조건 만든 것 -->
+	<nav class="navbar navbar-default" th:fragment="headerNav">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand">MyService</a>
+			</div>
+			
+			<ul class="nav navbar-nav navbar-right">
+				<li th:if="${session.loginVO != null}">
+					<p class="navbar-text">
+						<strong th:text="${session.loginVo.name}">사용자</strong>님 반갑습니다
+						(ID:<span th:text="${session.loginVo.id}">아이디</span>)
+					</p>
+				</li>	
+				<li th:if="${session.loginVo != null}">
+					<a th:href="@{/logout.do}">로그아웃</a>
+				</li>
+				<li th:if="${session.loginVo == null}">
+					<a th:href="@{/login.do}">로그인</a>
+				</li>
+				
+				<li th:if="${session.loginVo == null}">
+					<a th:href="@{/registForm.do}">회원가입</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+</body>
+</html>
