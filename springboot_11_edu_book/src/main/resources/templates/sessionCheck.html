@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>세션확인</title>
+</head>
+<body>
+	<!-- TODO 006 담겨 있는 각 Session 값을 출력 -->
+	<fieldset>
+		<legend>담겨 있는 각 Session의 값을 출력
+			<button th:onclick="|location.href='@{/sessionInit.do}'|">새로받기</button>
+		</legend>	
+		<div>
+			<h3>HttpSession : [[${session.httpSessionText}]]</h3>
+			<h3>@SessionAttributes : [[${session.sessionTest}]]</h3>
+		</div>
+	</fieldset>
+	
+	<fieldset>
+		<legend>@SessionAttributes를 생성한 컨트롤러(Session_01_Controller) 삭제</legend>
+		<ul>
+			<!-- TODO 007 session.setComplete() 삭제 -->
+			<li>
+				<a href="./test01.do">test01.do @SessionAtrributes 삭제</a>
+				<!-- TODO 009 삭제 확인 -->
+				<button onclick="location.href='./result01.do'">결과 확인 result01.do</button>
+			</li>
+			
+			<li>
+			<!-- TODO 011 HttpSession invalidate() 삭제 -->
+				<a href="./test02.do">test02.do HttpSession 삭제</a>
+			</li>
+		</ul>
+	</fieldset>
+	
+	<fieldset>
+		<legend>생성하지 않은 다른 Controller(Session_02_Controller)에서는 어떻게 관리가 되는가</legend>
+		<ul>
+			<li>
+				<!-- TODO 013 생성과 다른 Controller에서 SessionStatus setComplete를 실행 -->
+				<a href="./test03.do">test03.do @Session.do @SessionAttrubute 삭제</a>
+				<!-- TODO 015 다른 Controller에서는 @SessionAttribute는 삭제되지 않는다 -->
+			</li>
+			<li>
+				<!-- TODO 016 생성도니 다른 Controller에서 HttpSession invalidate()를 실행 -->
+				<a href="./test04.do">test04.do HttpSession 삭제</a>
+			</li>
+		</ul>
+	</fieldset>
+</body>
+</html>
+
+
+

@@ -50,6 +50,7 @@
 			
 			<!-- thymeleaf HTML의 속성 기반이다, tag가 없으면 작성못하기 때문에 th:block을 통해서 tag 없이도 작업이 가능 -->
 			<th:block th:if="${session.loginVo.auth == 'ROLE_ADMIN'}">
+			<!-- TODO 074 회원권한 변경 : 회원관리 -->
 				<input type="button" value="회원관리" th:onclick="|location.href='@{/managementUser.do}'|">
 			
 			</th:block>

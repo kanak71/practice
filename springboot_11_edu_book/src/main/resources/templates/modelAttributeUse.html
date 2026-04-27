@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>ModelAttribute 출력</title>
+</head>
+<body>
+	<!-- TODO 105 자동으로 담겨 있는 ModelAttribute 객체를 출력 -->
+	<ul th:each="type : ${userType}">
+		<li th:text="${type}"></li>
+	</ul>
+</body>
+</html>

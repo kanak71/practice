@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:replace="~{layout/header :: headerHead}"></th:block>
+	
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+	<!-- TODO 077 회원 권한 이벤트 및 권한 변경 이벤트 -->
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("button[name=btnChk]").click(function(event){
+				event.preventDefault();
+				
+				var btnOrder = $(this).val();
+				console.log("요청 변경 권한 : ", btnOrder);
+				
+				var chkRow = $("input[name=chkid]:checked");
+				for(let i=0; i<chkRow.length; i++){
+					if(btnOrder == 'toAuth'){
+						chkRow[i].parentNode.parentNode.children[4].textContent = 'ROLE_ADMIN';
+					}else{
+						chkRow[i].parentNode.parentNode.children[4].textContent = 'ROLE_USER';			
+					}
+				}
+				changeAuthAjax(btnOrder);
+			});
+		});
+		
+			function changeAuthAjax(order){
+				var chkids = document.querySelectorAll("input[name=chkid]:checked");
+				if(chkids.length == 0){
+					alert("한개 이상의 수정 값을 선택해 주세요")
+				} else{
+					var form = document.querySelector("form");
+					var formData = new FormData(form);
+					//체크가 여러개가 된다면, 덮여쓰기가 된다 => 마지막 값만 남음
+					/*
+						formData.forEach(function(value, key){
+						if(jsonData[key]){
+							if(Array.isArray(jsonData[key])){
+								jsonData[key].push(value)
+							} else{
+								jsonData[key] = [jsonData[key], value]
+							}
+						} else{
+							jsonData[key] = value;
+						}
+						}
+					});
+					*/
+					var jsonData = {};
+					formData.forEach(function(value, key){
+						jsonData[key] = value;
+					});
+					var params = new URLSearchParams(new FormData(form));
+					
+					console.log("javascript formData : ", formData);
+					console.log("javascript 객체 {} : ",jsonData);
+					console.log("javascript formData stringify 문자열: ", JSON.stringify(jsonData));
+					console.log("URLSearchParams : ", params);
+					
+					var url = "./auth/"+order+".do";
+					
+					var data = $("form").serialize();
+					console.log("jquery serialize() : ", data);
+					
+					fetch(url,{
+						method: "post",
+						header: {
+							"Content-Type":"application/x-www-form-urlencoded"
+						},
+						body: params
+					})
+					.then(response=>{
+						//string 이던 ResponseBody로 반환되면 ok 즉, 200을 판단
+						if(!response.ok){	//throw 통해서 catch로 전달하겠다
+							throw new Error("Network Response was Not OK");
+						}
+						return response.text();	//서버응답 "true"/"false" 문자열로 보낸다면 text(), JSON 객체라면 json
+					})
+					.then(msg=>{
+						if(msg == "true"){
+							alert("변경이 완료되었습니다");
+						}else{
+							alert("잘못된 요청입니다");
+						}
+					})
+					.catch(error =>{
+						//네트워크 장애나 위의 코드중에서 throw한 에러 발생시 실행
+						console.log("Error :", error);
+						alert("잘못된 요청 처리");
+					});
+				}
+			}
+			
+		
+	</script>
+
+</head>
+<body>
+<!-- TODO 076 회원조회 리스트 출력 -->
+	<div th:replace="~{layout/header :: headerNav}"></div>
+	
+	<div class="container">
+		<form>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>선택</th>
+						<th>아이디</th>
+						<th>이름</th>
+						<th>이메일</th>
+						<th>권한</th>
+						<th>활성여부</th>
+						<th>가입일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="vo: ${userList}">
+						<td>
+							<input type="checkbox" name="chkid" th:value="${vo.id}">
+						</td>
+						<td th:text="${vo.id}"></td>
+						<td th:text="${vo.name}"></td>
+						<td th:text="${vo.email}"></td>
+						<td th:text="${vo.auth}"></td>
+						<td th:text="${vo.enable}"></td>
+						<td th:text="${vo.joindate}"></td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<!-- TODO 078 회원 권한 변경 버튼 -->
+						<td colspan="7">
+							<button name="btnChk" value="toAuth">관리자로 변경</button>
+							<button name="btnChk" value="toUser">일반 유저로 변경</button>
+						</td>
+					
+					</tr>
+				</tfoot>
+				
+			</table>
+		</form>
+	</div>
+</body>
+</html>

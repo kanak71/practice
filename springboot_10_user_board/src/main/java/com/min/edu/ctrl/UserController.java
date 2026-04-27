@@ -129,6 +129,16 @@ public class UserController {
 		
 		return "userSelectAll";
 	}
+	
+	//TODO 075 회원 관리 조회 managementUser.do
+	@GetMapping(value = "/managementUser.do")
+	public String managementUser(Model model) {
+		log.info("UserController managementUser.do GET 회원관리 이동");
+		List<UserVo> userList = service.getAllUser();
+		model.addAttribute("userList", userList);
+		
+		return "managementUser";
+	}
 
 
 

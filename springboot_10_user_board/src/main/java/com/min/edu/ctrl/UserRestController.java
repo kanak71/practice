@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -107,6 +108,21 @@ public class UserRestController {
 		//4) SpringBoot에서 JCF는 자동으로 JSON 처리가 된다
 		
 		return lists;	//Spring 
+	}
+	
+	//TODO 079 회원 권한 변경 요청 ./auth/"+order+".do
+	//@PostMapping("./auth/{order}.do")
+	
+	@PostMapping("/auth/{order}.do")	//order가 toAuth | toUser 요청이 되어서 들어온다
+	public String handelAll(@RequestParam List<String> chkid, @PathVariable String order) {
+		log.info("UserRestController ./auth/??.do POST : {}", order);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("checkid", chkid);
+		map.put("authvalue", order.equals("toAuth")?"ROLE_ADMIN":"ROLE_USER");
+		
+		int n = service.setChangeAuth(map);
+		
+		return (n>0)?"true":"false";
 	}
 	
 }
