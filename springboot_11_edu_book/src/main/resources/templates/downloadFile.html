@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>파일 다운로드</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+	<!-- TODO 307 전달받은 파일의 정보 표시 -->
+	<fieldset>
+		<legend>저장된 파일의 정보</legend>
+		<div>
+			[[${originalFileNames}]]<br>
+			[[${saveFileNames}]]<br>
+			[[${path}]]
+		</div>
+	</fieldset>
+	
+	<!-- TODO 308 저장된 파일 다운로드 요청 -->
+	<fieldset>
+		<div>파일다운로드 Attachement</div>
+		<form action="./download.do" method="post">
+			<input type="text" name="originFileName" th:value="${originalFileNames}" readonly="readonly">
+			<input type="text" name="saveFileName" th:value="${saveFileNames[0]}" readonly="readonly">
+			<input type="submit" value="파일다운로드">
+		</form>
+	</fieldset>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>채팅</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+
+<script type="text/javascript">
+	window.onload = function(){
+		document.querySelector(".btn-primary").onclick=function(){
+			location.href="./chatOneToMany.do";
+		}
+	}
+</script>
+
+
+<body>
+	<div class="container" style="margin-top: 200px; text-align: center;">
+		<!-- TODO 002 1:n 채팅 -->
+		<button class="btn btn-primary">1:N 채팅</button>
+	</div>
+</body>
+</html>

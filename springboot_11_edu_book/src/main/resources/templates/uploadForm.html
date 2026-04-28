@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>파일업로드</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+	<!-- TODO 306 파일 업로드 화면 -->
+	<form action="./upload.do" method="post" enctype="multipart/form-data">
+		<h4>업로드 파일</h4>
+		파일:<input type="file" name="file"><br>
+		설명<br>
+		<textarea rows="10" cols="40" name="desc" class="content"></textarea>
+		<input type="submit" value="파일업로드">
+	</form>
+	
+	<!-- 
+		TODO 401 AJAX를 통한 이미지 업로드 및 미리보기
+			- AJAX로 파일과 데이터를 보내기 위해서 new FormData()를 통해서 보내줘야한다
+			- file이 포함되어 있다면 multipart/form-data를 사용해서 보내주는데 fetch에서는 사용하지 않는다
+	-->
+	<fieldset>
+		<legend>AJAX를 통한 이미지 업로드 및 미리보기</legend>
+		<button type="button" id="btnSubmitAll" class="btn btn-primary">전체 이미지 저장</button>
+		<div>
+			<input type="file" id="reviewImageFileInput" accept="image/*" multiple="multiple">
+		</div>
+		<div>
+			<ul class="list_thumb"></ul>
+		</div>
+	</fieldset>
+	
+</body>
+<script type="text/javascript">
+	window.onload = function(){
+		document.getElementById("reviewImageFileInput").onchange = function(){
+			console.log("파일 업로드 버튼 실행");	//누른 tag <input type="file">
+			
+			var files = this.files;	//선택된 파일
+			var fileForm = /(.*?)\.(jpg|jpeg|png|bmp|gif|pdf)/;
+			var maxSize = 5*1024*1024;
+			var validFiles = [];
+			
+			for(let i=0; i<files.length; i++){
+				var imgFile = files[i].name.toLowerCase();
+				var fileSize = files[i].size;
+				console.log(i+"번째", imgFile, fileSize);
+				
+				/* test.jpg -> imgFile.match(fileForm) -> ["jpg"] or null
+				*/
+				
+				var checkImgMatch = imgFile.match(fileForm);	//객체 혹은 null
+				if(!checkImgMatch){
+					alert("이미지 파일만 가능합니다");
+					return;
+				}
+				
+				if(fileSize > maxSize){
+					alert("이미지 파일은 5Mb 이하만 가능합니다");
+					return;
+				}
+				
+				validFiles.push(files[i]);
+				
+			}
+			
+			//이미지 미리보기
+			readUrl(this);
+			
+		}//function
+	}//onload
+	
+	//파일을 읽어서 미리보기로 만듦
+	function readUrl(input){
+		console.log(input, input.files.length);
+		
+		const files = input.files;
+		const listThumb = document.querySelector(".list_thumb");
+		
+		//1) FileList를 배열로 변환하여 순환
+		Array.from(files).forEach((file)=>{
+			//2) 파일 객체를 가리키는 임시 URL 생성(메모리 효율적)
+			const objectUrl = URL.createObjectURL(file);
+			
+			//3) 요소(Create Dom)
+			const li = document.createElement("li");
+			li.className="item";
+			
+			//4) HTML 구조(삭제버튼 추가, img)
+			li.innerHTML = `
+				<img src="${objectUrl}" width="50px" class="item_thumb">
+				<span class="filename">${file.name}</span>
+				<button class="deleteImg">삭제</button>
+				<span class="img_border"></span>
+			`;
+			//5) 리스트에 추가
+			listThumb.appendChild(li);
+		});
+	}	//readUrl
+	
+	document.querySelector(".list_thumb").addEventListener("click", function(event){
+		if(event.target.classList.contains("deleteImg")){
+			event.target.parentElement.remove();
+		}
+		if(event.target.classList.contains("subImage")){
+			//AJAX 코드를 작성
+		}
+	});
+	
+	//서버 전송
+	document.getElementById("btnSubmitAll").onclick=function(){
+		imageSubmitFetchJSON();	//전송함수 호출
+		
+	}
+	
+	//fetch AJAX를 통한 파일전송
+	function imageSubmitFetchJSON(){
+		console.log("이미지 AJAX로 전송")
+		
+		let formData = new FormData();
+		let content = document.querySelector(".content").value;
+		let fileInput = document.getElementById("reviewImageFileInput");
+		
+		//글 내용을 formData에 담아 준다
+		formData.append("desc", content);
+		
+		//화면에 남아 있는 파일명만 추출
+		let activeFileNames = Array.from(document.querySelectorAll(".filename")).map(sp => sp.textContent);
+		
+		//실제 파일 객체 중 화면에 있는 것만 담기
+		Array.from(fileInput.files).forEach(file =>{
+			if(activeFileNames.includes(file.name)){
+				formData.append("file",file);	//서버의 List<MultiPartfile> file로 받아 준다
+			}
+		});
+		
+		//----- fetch를 통해서 서버 전송
+		fetch("./uploadAjax.do",{
+			method: "post",
+			body: formData	//formData를 사용하면 Content-Type을 설정하지 마세요
+		})
+		.then(res=> res.text())
+		.then(data => alert("성공"))
+		.catch(error => console.log("전송실패 :", error));
+	}
+	
+	
+
+</script>
+</html>
+
+
+
+
+
+
+
