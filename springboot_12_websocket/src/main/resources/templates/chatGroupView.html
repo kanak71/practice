@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>채팅 화면</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="./css/chatGroupView.css">
+<script type="text/javascript" src="./js/chatGroup.js"></script>
+</head>
+<body>
+	현재 참여준인 자신의 정보 및 채팅 리스트<br>
+		아이디 : <span th:text="${session.mem_id}"></span><br>
+		그룹아이디 : <span th:text="${session.gr_id}"></span><br>
+		채팅참여 리스트 : <span th:text="${application.chatList}"></span> 
+		<hr>
+		<div class="container">
+				<button class="btn btn-danger btn-block" onclick="roomClose()">채팅종료</button>
+				<table>
+					<tr>
+						<td colspan="2" align="center"> 채팅그룹명 : <b id="group" th:text="${session.gr_id}"></b></td>
+					</tr>
+					<tr>
+						<td width="300px" height="400px" align="center">
+							<div class="resive_msg" style="border: 1px">
+								<div id="nickName">접속자 아이디 : <b th:text="${session.mem_id}"></b></div>
+							</div>
+						</td>
+						<td width="130px" class="memListBox">
+							<div class="listTitle">접속자 목록</div>
+							<div class="memList"></div>
+						</td>
+					</tr>				
+				</table>
+				<div class="chat_div">
+						<input type="text" class="chat" onkeypress="if(event.keyCode==13) $('.chat_btn').click();">
+						<input type="button" class="chat_btn" value="내용전송">
+				</div>
+		</div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+@charset "UTF-8";
+
+body {padding: 0;
+font-family: Arial, sans-serif;
+background-color: #fdf6e3;
+position: relative;
+}
+
+table {border: 1px solid #b0b0b0;
+border-collapse: collapse;
+margin: 20px auto;
+width: 80%;
+}
+
+.resive_msg {
+padding: 10px;
+width: 100%;
+height: 400px;
+overflow: auto;
+overflow-x: hidden;
+background: #e6f7ff;
+border: 1px solid #ccc;
+border-radius: 5px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.listTitle {height: 50px;
+vertical-align: top;
+font-size: 14px;
+font-weight: bold;
+color: #5a5a5a;
+text-align: center;
+margin-bottom: 10px;
+}
+
+.memList {vertical-align: top;
+list-style: none;
+padding: 0;
+margin: 0;
+}
+
+.memListBox {text-align: center;
+vertical-align: top;
+padding: 10px;
+overflow: auto;
+background: #b3e5fc;
+border: 1px solid #ddd;
+border-radius: 5px;
+}
+
+.chat_div {display: flex;
+align-items: center;
+width: 100%;
+height: 45px;
+padding: 5px;
+margin-top: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+background: #ffffff;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chat_btn {margin-left: 10px;
+height: 35px;
+width: 100px;
+background-color: #ffeb3b;
+color: black;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+transition: background-color 0.3s;
+}
+
+.chat_btn:hover {background-color: #fdd835;
+}
+
+.chat {flex: 1;
+height: 35px;
+padding: 5px;
+border: 1px solid #ccc;
+border-radius: 5px;
+}
+
+.chat:focus {outline: none;
+border-color: #80d8ff;
+}
+
+hr + br + br +.container::before {
+	content: "";
+display: block;
+width: 300px;
+height: 150px;
+margin: 20px auto;
+background-image: url('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fxme8F%2FbtsILjV8Mmp%2FdQ4szsd1hRoKJhhBHCLKSK%2Fimg.png');
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
+}
+
+
