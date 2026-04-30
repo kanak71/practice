@@ -11,3 +11,5 @@ Thumbs.db
 # Browser / temp
 Network/
 Cookies/
+
+application-local.properties
