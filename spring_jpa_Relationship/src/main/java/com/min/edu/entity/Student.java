@@ -33,7 +33,7 @@ public class Student {
 	//TODO 002 학생 조회시 과목의 정보를 조회
 	private Set<Subject> subjects = new HashSet<Subject>();
 	
-	public Set<Subject> getSebjects(){
+	public Set<Subject> getSubjects(){
 		return subjects;
 	}
 	
