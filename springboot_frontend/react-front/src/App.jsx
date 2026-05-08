@@ -6,6 +6,12 @@ import './App.css'
 import ListEmployeeComponent from './components/ListEmployeeComponent'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import EmployeeLayout from './layout/employeeLayout'
+import CreateEmployeeComponent from './components/CreateEmployeeComponent'
+import ViewEmployeeComponent from './components/ViewEmployeeComponent'
+import UpdateEmployeeComponent from './components/UpdateEmployeeComponent'
+import PaginationLayout from './layout/PaginationLayout'
+import PagingComponent from './components/PagingComponent'
+import PagingJPAComponent from './components/PagingJPAComponent'
 
 function App() {
 
@@ -21,6 +27,15 @@ function App() {
               <Route index element={<ListEmployeeComponent/>}/>
               {/*/employess 경로로 접속 시 */}
               <Route path='employees' element={<ListEmployeeComponent/>}/>
+              <Route path='/add-employee' element={<CreateEmployeeComponent/>}/>
+              <Route path='/view-employee/:id' element={<ViewEmployeeComponent/>}/>
+              <Route path='/update-employee/:id' element={<UpdateEmployeeComponent/>}/>
+            </Route>
+
+            {/*페이지네이션 전용 레이아웃 영역(Header/Footer 적용) */}
+            <Route path='/page' element={<PaginationLayout/>}>
+              <Route index element={<PagingComponent/>}/>
+              <Route path='jpa-page' element={<PagingJPAComponent/>}/>
             </Route>
         
       </Routes>
