@@ -2,16 +2,32 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import securityImage from '../images/security.png'
 import loadingGif from '../images/loadingGif.gif'
+import { useNavigate } from 'react-router-dom'
 
-const LoginComponent = () => {
+//App.jsx에서 props 객체를 전달 받음(props 전달 방식)
+const LoginComponent = (props) => {
+
+    //로그인 후 sessionStorage 정보값 조회
+    const loggedInUser = JSON.parse(window.sessionStorage.getItem("user"));
+
+    //사용자/관리자에 따른 페이지이동 navigate
+    const navigate = useNavigate();
+
+    const goToAdminPage = ()=>{
+        navigate("/admin-page");
+    }
+
+    const goToUserPage = ()=>{
+        navigate("/user-page");
+    }
 
 const[user, setUser] = useState({
     username:'',
     password:''
 });
 
-//로그인 상태를 확인하는 객체
-const [isLoggedIn, setIsLoggedIn] = useState(false);
+//로그인 상태를 확인하는 객체 -> App.jsx에서 props를 통해서 처리한다. 따라서 삭제
+// const [isLoggedIn, setIsLoggedIn] = useState(false);
 //remember-me 
 const[rememberMe, setRememberMe] = useState(false);
 
@@ -47,11 +63,11 @@ const login = async ()=>{
 
             };
             window.sessionStorage.setItem("user", JSON.stringify(userData));
-            setIsLoggedIn(true);
+            // setIsLoggedIn(true);
+            props.handleLogin();    //App.jsx에서 props객체를 전달받아 로그인 상태를 변경하는 함수
         }
     }catch(error){
         //401인증 오류 처리 failureHandle 처리 반환 확인
-        // console.log("로그인 실패", error)
         if(error.response && error.response.status == 401){
             console.error("로그인 실패", error.response.data);
             alert("로그인 실패 : 아이디나 비밀번호가 잘못되었습니다")
@@ -63,9 +79,21 @@ const login = async ()=>{
     }
 }
 
-if(isLoggedIn){   //로그인 성공
+if(props.isLoggedIn){   //로그인 성공 -> App.jsx에서 props 객체로 전달받아 로그인 여부 확인
     return (
-        <div>로그인 성공</div>
+        <div>
+            <fieldset>
+                <legend>로그인 사용자 정보</legend>
+                <div>
+                    <p>아이디 : {loggedInUser.id}</p>
+                    <p>권한 : {loggedInUser.role.map((role, index)=>(
+                        <span key={index}>{role.authority}</span>
+                    ))}</p>
+                </div>
+                <button onClick={goToAdminPage}>관리자 페이지</button>
+                <button onClick={goToUserPage}>사용자 페이지</button>
+            </fieldset>
+        </div>
     )
 }else{  //로그인 화면
     return (
