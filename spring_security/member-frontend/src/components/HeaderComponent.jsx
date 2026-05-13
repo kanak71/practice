@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { Link, useNavigate } from 'react-router-dom';
+import SessionChecker from "./SessionChecker";
 
 const HeaderComponent = ({ isLoggedIn, handleLogout }) => {
 
@@ -51,6 +52,9 @@ const HeaderComponent = ({ isLoggedIn, handleLogout }) => {
 
             )}
         </div>
+        {/*SessionChecker에 함수 전달 */}
+        <SessionChecker isLoggedIn={isLoggedIn} onLogout={onLogout}/>
+
     </nav>
   )
 }

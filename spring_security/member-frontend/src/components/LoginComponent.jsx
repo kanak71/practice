@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import securityImage from '../images/security.png'
 import loadingGif from '../images/loadingGif.gif'
@@ -46,20 +46,27 @@ const login = async ()=>{
         formData.append('username', user.username); //username이 security의 폼필드의 기본 이름
         formData.append('password', user.password); //password가 security의 폼필드의 기본 이름
 
+        if(rememberMe){
+            formData.append("remember-me","true");
+        }
+
         const response = await axios.post('http://localhost:8080/loginProcess', formData, {
             withCredentials: true
         });
 
         if(response.status == 200){
             //성공적으로 로그인한 후 수행할 작업
+            //loginOk의 요청된 반환값
             console.log("Login Success : ", response.data);
             alert(`${response.data.username}님, 환영합니다`);
 
             //로그인된 정보를 서버에서 사용할 수 없다
             //로그인된 정보를 세션 저장소(브라우저)에 저장
+            //{auth:, username:, userInfo: {"address":"서울".....}}
             const userData = {
-                id:response.data.username,
-                role:response.data.auth
+                id: response.data.username,
+                role: response.data.auth,
+                address: response.data.userInfo.address,
 
             };
             window.sessionStorage.setItem("user", JSON.stringify(userData));
@@ -79,6 +86,34 @@ const login = async ()=>{
     }
 }
 
+//렌더링 시 remember-me를 서버를 통해서 확인
+const checkRememberMe = async ()=>{
+    try{
+
+        const response = await axios.get("http://localhost:8080/checkRememberMe", {withCredentials:true})
+
+        if(response.status == 200 && response.data.id){
+            console.log("Remember-Me Success", response.data)
+
+            const userData = {
+                id: response.data.id, 
+                role: response.data.role,
+                address: response.data.userInfo.address
+            };
+
+            window.sessionStorage.setItem("user", JSON.stringify(userData));
+
+            props.handleLogin();
+        }
+    }catch(error){
+        console.log("Remember-Me Check Failed", error)
+    }
+}
+
+useEffect(()=>{
+    checkRememberMe();
+},[]);
+
 if(props.isLoggedIn){   //로그인 성공 -> App.jsx에서 props 객체로 전달받아 로그인 여부 확인
     return (
         <div>
@@ -89,6 +124,7 @@ if(props.isLoggedIn){   //로그인 성공 -> App.jsx에서 props 객체로 전�
                     <p>권한 : {loggedInUser.role.map((role, index)=>(
                         <span key={index}>{role.authority}</span>
                     ))}</p>
+                    <p>주소 : {loggedInUser.address}</p>
                 </div>
                 <button onClick={goToAdminPage}>관리자 페이지</button>
                 <button onClick={goToUserPage}>사용자 페이지</button>
