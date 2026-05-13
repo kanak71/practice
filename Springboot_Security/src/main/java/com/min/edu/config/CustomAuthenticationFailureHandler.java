@@ -1,4 +1,4 @@
-package com.min.edu.comfig;
+package com.min.edu.config;
 
 import java.io.IOException;
 import java.io.PrintWriter;
