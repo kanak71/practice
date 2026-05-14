@@ -13,3 +13,5 @@ Network/
 Cookies/
 
 application-local.properties
+
+**/application.properties
