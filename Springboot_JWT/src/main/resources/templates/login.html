@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JWT 로그인</title>
+</head>
+<body>
+
+<h1>JWT 로그인</h1>
+
+<input type="text" id="username" placeholder="아이디">
+<br><br>
+
+<input type="password" id="password" placeholder="비밀번호">
+<br><br>
+
+<button onclick="login()">로그인</button>
+
+<h3>JWT TOKEN</h3>
+<div id="result"></div>
+
+<script>
+async function login() {
+
+    const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify({
+            username: document.getElementById("username").value,
+            password: document.getElementById("password").value
+        })
+    });
+
+    const token = await response.text();
+
+    document.getElementById("result").innerText = token;
+}
+</script>
+
+</body>
+</html>
