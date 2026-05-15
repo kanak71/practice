@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http:www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .login-button {
+            display: block;
+            width: 250px;
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+            text-decoration: none;
+            color: white;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .naver { background-color: #03C75A; }
+        .google { background-color: #DB4437; }
+        .github { background-color: #333; }
+    </style>
+</head>
+<body>
+	  <h2>소셜 로그인</h2>
+    <div class="login-container">
+    	<!-- 스프링 시큐리티가 만든 '내부 전용 통로' 주소를 통한 요청
+    	spring.security.oauth2.client.provider.naver.authorization-uri로 자동으로 보내짐
+    	 -->
+        <a class="login-button naver" href="/oauth2/authorization/naver">네이버 로그인</a>
+        <a class="login-button google" href="/oauth2/authorization/google">구글 로그인</a>
+        <a class="login-button github" href="/oauth2/authorization/github">GitHub 로그인</a>
+    </div>
+</body>
+</html>
