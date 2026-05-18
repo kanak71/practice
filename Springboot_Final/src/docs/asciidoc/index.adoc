@@ -1,0 +1,36 @@
+= Spring Boot REST Docs API 문서
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+:sectlinks:
+:sectnums:
+:revnumber: v1.0.0
+:revdate: 2026-05-18
+:author: min
+
+[[resource-vehicles]]
+== Vehicle 리스트 조회
+
+`GET` 요청을 하여 모든 등록된 차량 정보를 조회합니다.
+
+=== Request
+
+include::{snippets}/vehicles/http-request.adoc[]
+
+=== Curl Request
+
+include::{snippets}/vehicles/curl-request.adoc[]
+
+=== Response
+
+include::{snippets}/vehicles/http-response.adoc[]
+
+=== Response Body
+
+include::{snippets}/vehicles/response-body.adoc[]
+
+=== Response Fields
+
+include::{snippets}/vehicles/response-fields.adoc[]
