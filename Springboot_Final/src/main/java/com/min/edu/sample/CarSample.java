@@ -8,14 +8,16 @@ import org.springframework.context.annotation.Configuration;
 
 import com.min.edu.repository.CarRespository;
 import com.min.edu.repository.OwnerRepository;
+import com.min.edu.repository.UserRepository;
 import com.min.edu.vo.Car;
 import com.min.edu.vo.Owner;
+import com.min.edu.vo.User;
 
 @Configuration
 public class CarSample {
 	
 	@Bean
-	CommandLineRunner commandLineRunner(CarRespository carRespository, OwnerRepository ownerRepsitory) {
+	CommandLineRunner commandLineRunner(CarRespository carRespository, OwnerRepository ownerRepsitory, UserRepository userRepository) {
 		return args -> {
 			
 //			Owner owner1 = new Owner("Marry", "Chistmas");
@@ -35,6 +37,10 @@ public class CarSample {
 //			);
 //			ownerRepsitory.saveAll(List.of(owner1, owner2));
 //			carRespository.saveAll(List.of(ford, hyundai, ray));
+			
+			User u1 = new User("user", "$2y$04$bWbHIn26CvRJ0aozRNzaH.4VQWEv4GeIBKOvr5fX6vZVif2TNGhlW", "USER");
+			User u2 = new User("admin", "$2y$04$bWbHIn26CvRJ0aozRNzaH.4VQWEv4GeIBKOvr5fX6vZVif2TNGhlW", "ADMIN");
+			userRepository.saveAll(List.of(u1, u2));
 //			
 		};
 	}

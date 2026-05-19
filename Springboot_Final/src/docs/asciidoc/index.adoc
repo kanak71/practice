@@ -13,24 +13,24 @@
 [[resource-vehicles]]
 == Vehicle 리스트 조회
 
-`GET` 요청을 하여 모든 등록된 차량 정보를 조회합니다.
+`GET` 요청을 하여 생산정보에 등록된 차량 정보를 조회합니다.
 
 === Request
 
-include::{snippets}/vehicles/http-request.adoc[]
+include::{snippets}/findByProduectYear/http-request.adoc[]
 
 === Curl Request
 
-include::{snippets}/vehicles/curl-request.adoc[]
+include::{snippets}/findByProduectYear/curl-request.adoc[]
 
 === Response
 
-include::{snippets}/vehicles/http-response.adoc[]
+include::{snippets}/findByProduectYear/http-response.adoc[]
 
 === Response Body
 
-include::{snippets}/vehicles/response-body.adoc[]
+include::{snippets}/findByProduectYear/response-body.adoc[]
 
 === Response Fields
 
-include::{snippets}/vehicles/response-fields.adoc[]
+include::{snippets}/findByProduectYear/response-fields.adoc[]
