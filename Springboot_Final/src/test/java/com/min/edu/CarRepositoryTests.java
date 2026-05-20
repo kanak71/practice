@@ -11,8 +11,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import com.min.edu.repository.OwnerRepository;
+
 import com.min.edu.repository.CarRespository;
+import com.min.edu.repository.OwnerRepsitory;
 import com.min.edu.vo.Car;
 import com.min.edu.vo.Owner;
 
@@ -23,7 +24,7 @@ class CarRepositoryTests {
 	private CarRespository carRespository;
 	
 	@Autowired
-	private OwnerRepository ownerRepsitory;
+	private OwnerRepsitory ownerRepsitory;
 	
 	
 	/*

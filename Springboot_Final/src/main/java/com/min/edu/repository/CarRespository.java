@@ -9,8 +9,8 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.min.edu.vo.Car;
 
-@RepositoryRestResource(path = "vehicles")
 //https://docs.spring.io/spring-data/jpa/reference/4.1/jpa/query-methods.html?utm_source
+@RepositoryRestResource(path = "vehicles")
 public interface CarRespository extends JpaRepository<Car, Long> {
 
 	

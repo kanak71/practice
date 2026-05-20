@@ -10,27 +10,27 @@
 :revdate: 2026-05-18
 :author: min
 
-[[resource-vehicles]]
-== Vehicle 리스트 조회
 
-`GET` 요청을 하여 생산정보에 등록된 차량 정보를 조회합니다.
+[[Spring Security 로그인 테스트]]
+== 기본 user 로그인 후 `/api` 요청
 
-=== Request
-
-include::{snippets}/findByProduectYear/http-request.adoc[]
+`get` 요청을 통해 로그인 후 서버 요청 확인.  
 
 === Curl Request
+include::{snippets}/after_login_api/curl-request.adoc[]
 
-include::{snippets}/findByProduectYear/curl-request.adoc[]
+=== HTTP Request
+include::{snippets}/after_login_api/http-request.adoc[]
 
-=== Response
+=== Request Body
+include::{snippets}/after_login_api/request-body.adoc[]
 
-include::{snippets}/findByProduectYear/http-response.adoc[]
+=== HTTP Response
+include::{snippets}/after_login_api/http-response.adoc[]
 
 === Response Body
+include::{snippets}/after_login_api/response-body.adoc[]
 
-include::{snippets}/findByProduectYear/response-body.adoc[]
+=== Response Field
+include::{snippets}/after_login_api/response-fields.adoc[]
 
-=== Response Fields
-
-include::{snippets}/findByProduectYear/response-fields.adoc[]

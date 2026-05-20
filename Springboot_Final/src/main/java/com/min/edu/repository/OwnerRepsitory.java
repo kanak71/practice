@@ -6,12 +6,10 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.min.edu.vo.Owner;
 
-@RepositoryRestResource(path = "owners")
-public interface OwnerRepository extends JpaRepository<Owner, Long> {
+public interface OwnerRepsitory extends JpaRepository<Owner, Long> {
 
 	@Query("SELECT o FROM Owner o JOIN FETCH o.cars")
 	List<Owner> findAllwithCars();
