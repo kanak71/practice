@@ -7,6 +7,7 @@ import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import CarList from './components/CarList'
+import Login from './components/Login'
 
 function App() {
 
@@ -16,13 +17,12 @@ function App() {
         <Toolbar>
           <Typography variant="h6">
             Car Shop
-            
           </Typography>
         </Toolbar>
       </AppBar>
 
       <div style={{ display:'flex', justifyContent:'center'}}>
-        <CarList />
+        <Login />
       </div>
 
     </div>
