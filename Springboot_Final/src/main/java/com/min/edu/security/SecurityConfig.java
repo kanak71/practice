@@ -2,8 +2,11 @@ package com.min.edu.security;
 
 import org.springframework.security.config.Customizer;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,9 +14,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password4j.BcryptPassword4jPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -59,10 +64,28 @@ public class SecurityConfig {
 //				.build();
 		
 		//프론트 작업 테스트용
-		return http
-				.csrf(csrf -> csrf.disable())
-				.authorizeHttpRequests(request-> request.anyRequest().permitAll())
-				.build();
+//		return http
+//				.csrf(csrf -> csrf.disable())
+//				.authorizeHttpRequests(request-> request.anyRequest().permitAll())
+//				.build();
+		
+		//3) REACT 로그인 처리를 위한 Security Config 처리
+		return http 
+			.csrf(csrf -> csrf.disable()) //csrf 비활성화
+			//RestConfig.java에 22번째줄
+			.cors(Customizer.withDefaults()) //CORS 사용
+			.authorizeHttpRequests(request ->
+										request
+											.requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+											.requestMatchers("/login").permitAll()	//로그인을 처리하기 위한 처음 요청 /login
+											
+											.anyRequest().authenticated()	//허용 외의 모든 요청은 인증(Authentication 객체)이 있어야지만 요청 처리
+												)
+			.httpBasic(httpBasic -> httpBasic.authenticationEntryPoint(authEntryPoint))
+			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+			.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
+			.build();
+					
 	}
 	
 
@@ -86,6 +109,22 @@ public class SecurityConfig {
 	public PasswordEncoder passwordEncoder() {
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		return encoder;
+	}
+	
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+	    CorsConfiguration config = new CorsConfiguration();
+
+	    config.setAllowedOrigins(List.of("http://localhost:5173"));
+	    config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS","PATCH"));
+	    config.setAllowedHeaders(List.of("*"));
+	    config.setAllowCredentials(true);
+	    config.setExposedHeaders(List.of("Authorization")); // ⭐ 중요
+
+	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+	    source.registerCorsConfiguration("/**", config);
+
+	    return source;
 	}
 	
 }

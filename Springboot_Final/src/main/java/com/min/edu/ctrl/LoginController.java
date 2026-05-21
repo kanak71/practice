@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +20,7 @@ import com.min.edu.vo.AccountCredentials;
  * 로그인 성공 시 서명된 JWT를 생성하는데 필요한 JwtSertive를 주입하여 사용한다
  */
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 public class LoginController {
 	
 	@Autowired

@@ -19,11 +19,13 @@ public class RestConfig implements RepositoryRestConfigurer {
 									.configureRepositoryRestConfiguration(config.exposeIdsFor(Car.class, Owner.class)
 																		, cors);
 		
-		cors.addMapping("/api/**") 	//Spring REST API의 기본 주소는 applicaiton.properties에서 정의, 요청이름 허용
+		cors.addMapping("**") 	//Spring REST API의 기본 주소는 applicaiton.properties에서 정의, 요청이름 허용
 				.allowedOrigins("http://localhost:5173/")	//허용될 출처를 지정
-				.allowedMethods("GET","POST","PUT","DELETE","PATCH") //허용할 HTTP 메소드 요청 설정
+				.allowedMethods("GET","POST","PUT","DELETE","PATCH","OPTIONS") //허용할 HTTP 메소드 요청 설정
 				.allowCredentials(true)	//자격인증 증명(쿠키, 인증정보 등) 허용 설정
 				.allowedHeaders("*") 	//허용할 헤더 설정
+				//JWT 헤더를 프론트에서 읽기 위해서 설정
+				.exposedHeaders("Authorization")
 				.maxAge(3600); 	//미리 요청을 캐쉬 3600초(1시간)
 		
 		/*
