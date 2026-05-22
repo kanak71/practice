@@ -31,11 +31,11 @@ public class CarSample {
 //			carRespository.saveAll(List.of(ford, hyundai, ray));
 			
 			
-			//User 정보 입력
+			// User 정보 입력
 //			User u1 = new User("user", "$2y$04$kNQBXSnFiK0LaTm6N0aY7em6GSA57uA4NAnE.WujxiIdsMFdIQEfS", "USER");
 //			User u2 = new User("admin", "$2y$04$kNQBXSnFiK0LaTm6N0aY7em6GSA57uA4NAnE.WujxiIdsMFdIQEfS", "ADMIN");
 //			userRepository.saveAll(List.of(u1,u2));
-//			
+			
 			
 		};
 	}

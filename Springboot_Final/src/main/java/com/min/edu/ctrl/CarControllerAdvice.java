@@ -16,8 +16,10 @@ import lombok.extern.slf4j.Slf4j;
 @ControllerAdvice
 @Slf4j
 public class CarControllerAdvice {
+
 	
-	@ExceptionHandler()
+	// 인증 예외 처리 (인증 실패시)
+	@ExceptionHandler(AuthenticationException.class)
 	public ResponseEntity<Map<String, Object>> handleAuthenticastionException(AuthenticationException ex){
 		log.error("인증 실패: 사용자 이름, 비밀번호가 올바르지 않습니다");
 		
@@ -27,7 +29,6 @@ public class CarControllerAdvice {
 		response.put("msg", "사용자 이름, 비밀번호가 올바르지 않습니다");
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
 	}
-	
 	
 	
 	// NullPointExption 처리(차동차 정보가 없을 경우)
@@ -66,7 +67,6 @@ public class CarControllerAdvice {
 		//상태(Status) + 메시지 값(Body)를 객체 => jackson-bind 라이브러리 + spring web => JSON 같이 보내준다
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 	}
-	
 	
 }
 
