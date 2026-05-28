@@ -1,1 +1,22 @@
 .metadata/
+
+# Spring
+application.properties
+*.yml
+*.yaml
+
+# Eclipse
+.metadata/
+.settings/
+bin/
+target/
+
+# IntelliJ
+.idea/
+
+# Node
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db

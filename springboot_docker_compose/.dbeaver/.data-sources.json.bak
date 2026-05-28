@@ -1,0 +1,41 @@
+{
+	"folders": {},
+	"connections": {
+		"mysql8-19e6cdd4d6a-22c92b9805f07a14": {
+			"provider": "mysql",
+			"driver": "mysql8",
+			"name": "test",
+			"save-password": true,
+			"configuration": {
+				"host": "localhost",
+				"port": "3307",
+				"database": "test",
+				"url": "jdbc:mysql://localhost:3307/test",
+				"configurationType": "MANUAL",
+				"home": "C:\\Program Files\\MySQL\\MySQL Server 8.0",
+				"type": "dev",
+				"closeIdleConnection": true,
+				"provider-properties": {
+					"@dbeaver-show-all-dbs@": "true"
+				},
+				"auth-model": "native"
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"smart-commit": false,
+			"smart-commit-recover": true,
+			"auto-close-transactions": true,
+			"close-transactions-period": 1800,
+			"auto-close-connections": true,
+			"close-connections-period": 14400
+		}
+	}
+}
