@@ -1,0 +1,22 @@
+INSERT INTO bookmarks (title, url, created_at)
+VALUES
+('Google', 'https://www.google.com', CURRENT_TIMESTAMP),
+('YouTube', 'https://www.youtube.com', CURRENT_TIMESTAMP),
+('GitHub', 'https://github.com', CURRENT_TIMESTAMP),
+('Stack Overflow', 'https://stackoverflow.com', CURRENT_TIMESTAMP),
+('Spring', 'https://spring.io', CURRENT_TIMESTAMP),
+('Oracle', 'https://www.oracle.com', CURRENT_TIMESTAMP),
+('Amazon', 'https://www.amazon.com', CURRENT_TIMESTAMP),
+('Netflix', 'https://www.netflix.com', CURRENT_TIMESTAMP),
+('Naver', 'https://www.naver.com', CURRENT_TIMESTAMP),
+('Daum', 'https://www.daum.net', CURRENT_TIMESTAMP),
+('ChatGPT', 'https://chat.openai.com', CURRENT_TIMESTAMP),
+('Docker', 'https://www.docker.com', CURRENT_TIMESTAMP),
+('Kubernetes', 'https://kubernetes.io', CURRENT_TIMESTAMP),
+('React', 'https://react.dev', CURRENT_TIMESTAMP),
+('Vue', 'https://vuejs.org', CURRENT_TIMESTAMP),
+('Angular', 'https://angular.io', CURRENT_TIMESTAMP),
+('Maven', 'https://maven.apache.org', CURRENT_TIMESTAMP),
+('Gradle', 'https://gradle.org', CURRENT_TIMESTAMP),
+('Jenkins', 'https://www.jenkins.io', CURRENT_TIMESTAMP),
+('Redis', 'https://redis.io', CURRENT_TIMESTAMP);

@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  bookmarker-db:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+    ports:
+      - "15432:5432"
+ 
+ # DB가 실행되고 초기화 되고 healthy Check
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+
+  bookmarker-api:
+    build: 
+      context: bookmarker-api
+      dockerfile: Dockerfile
+
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://bookmarker-db:5432/appdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+
+    ports:
+      - "18080:8080"
+    
+    restart: always
+
+# bookmarker-db 먼지 실행되고 bookmarker-api 되어야 한다
+    depends_on:
+      bookmarker-db:
+        condition: service_healthy
+
+# 최종 시나리오 
+# bookmarker-db 시작 -> healthCheck 수행 -> healthy 상태 확인 => bookmarker-api
