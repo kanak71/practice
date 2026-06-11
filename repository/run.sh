@@ -47,8 +47,10 @@ function restart(){
 # 기본동작 , ./run sh start_infra : 명령어 인자
 action="start"
 
-if [[ "$#"!=0]]
+if [[ "$#" != 0 ]]
 then
   action=$@
 fi
+
+$action
 
