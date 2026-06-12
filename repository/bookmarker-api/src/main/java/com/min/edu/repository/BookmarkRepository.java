@@ -12,6 +12,7 @@ import com.min.edu.dto.BookmarksDto;
 
 
 
+
 @Repository
 public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 
@@ -22,6 +23,7 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 			select new com.min.edu.dto.BookmarkDto(b.id, b.title, b.url, b.createdAt) from Bookmark b
 			""")
 	Page<BookmarkDto> findByBookmarks(Pageable pageable);
+
 	
 	@Query("""
 			select new com.min.edu.dto.BookmarkDto(b.id, b.title, b.url, b.createdAt) from Bookmark b
