@@ -1,0 +1,30 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: sb-k8s-series   # 클러스터 이름
+
+nodes:
+  # Master Node (Control Plane)
+  - role: control-plane               # 이 노드를 컨트롤 플레인으로 지정
+    kubeadmConfigPatches:             # kubeadm 설정을 패치하여 추가 구성
+      - |
+        kind: InitConfiguration       # kubeadm 초기화 구성
+        nodeRegistration:             # 노드 등록 관련 설정
+          kubeletExtraArgs:           # kubelet 실행 추가 인자
+            node-labels: "ingress-ready=true"  # 노드 레이블 추가 -> Ingress Controller 배포 시 필요
+
+    extraPortMappings:                # 호스트와 컨테이너 간 포트 매핑 설정
+      - containerPort: 80             # 컨테이너 내부 포트 80(HTTP)
+        hostPort: 80                  # 호스트 포트 80으로 매핑 -> 브라우저에서 localhost:80 접근 가능
+        protocol: TCP
+
+      - containerPort: 443            # 컨테이너 내부 포트 443(HTTPS)
+        hostPort: 443                 # 호스트 포트 443으로 매핑 -> HTTPS 테스트 가능
+        protocol: TCP
+
+      - containerPort: 30090          # Kubernetes NodePort (Spring Boot Service)
+        hostPort: 18080               # 호스트 포트 18080 -> Spring Boot NodePort 30090 접근
+        protocol: TCP
+
+      - containerPort: 30080          # Kubernetes NodePort (Next.js Service)
+        hostPort: 30080               # 호스트 포트 30080 -> Next.js NodePort 30080 접근
+        protocol: TCP
